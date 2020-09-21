@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import axios from "axios";
 import { Loading } from "./loading";
 
-const API = "637e731e42ecbb0de6b1e1bb502f3c32";
+const API = "bfab82a06703b1954a1b1d5a818959f0";
 
 class App extends React.Component {
   state = {
@@ -16,15 +16,23 @@ class App extends React.Component {
         let long = position.coords.longitude;
         let lat = position.coords.latitude;
         this.getWeather(lat, long);
-        console.log(long, lat);
+        this.setState({ isLoading: false });
       });
     }
   };
   getWeather = async (lat, long) => {
     const weather = await axios.get(
-      `api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API}`
+      `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API}&units=metric`
     );
-    console.log(weather);
+    const { data } = weather;
+    console.log(data);
+    const weatherData = {
+      temp: data.main.temp,
+      region: data.name,
+      weather: data.weather[0].main,
+    };
+    this.setState({ weatherData: weatherData });
+    console.log(this.state.weatherData);
   };
   componentDidMount() {
     this.getLocation();
