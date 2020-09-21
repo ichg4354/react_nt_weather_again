@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import axios from "axios";
 import { Loading } from "./Loading";
 import { ShowWeather } from "./Weather";
+import * as Location from "expo-location";
 
 const API = "bfab82a06703b1954a1b1d5a818959f0";
 
